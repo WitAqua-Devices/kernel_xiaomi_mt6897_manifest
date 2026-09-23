@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="aosp" fetch="https://android.googlesource.com/" review="https://android-review.googlesource.com/" />
+  <remote name="mt6897" fetch="https://github.com/soralis0912-dev/" />
+  <remote name="lineage" fetch="https://github.com/LineageOS/" />
+
+  <default revision="main-kernel-build-2023" remote="aosp" sync-j="4" />
+
+  <!-- Android common kernel manifest, common-android14-6.1-lts, minus the two
+       projects the MediaTek workspace replaces. -->
+  <project path="build/kernel" name="kernel/build">
+    <linkfile src="kleaf/bazel.sh" dest="tools/bazel" />
+    <linkfile src="build_test.sh" dest="build/build_test.sh" />
+    <linkfile src="config.sh" dest="build/config.sh" />
+    <linkfile src="multi-switcher.sh" dest="build/multi-switcher.sh" />
+    <linkfile src="abi" dest="build/abi" />
+    <linkfile src="static_analysis" dest="build/static_analysis" />
+  </project>
+  <project path="kernel/configs" name="kernel/configs" />
+  <project path="common-modules/virtual-device" name="kernel/common-modules/virtual-device" revision="android14-6.1" />
+  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1" />
+  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" clone-depth="1" />
+  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1" />
+  <project path="prebuilts/clang-tools" name="platform/prebuilts/clang-tools" clone-depth="1" />
+  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1" />
+  <project path="tools/mkbootimg" name="platform/system/tools/mkbootimg" />
+
+  <project path="prebuilts/bazel/linux-x86_64" name="platform/prebuilts/bazel/linux-x86_64" clone-depth="1" />
+  <project path="prebuilts/jdk/jdk11" name="platform/prebuilts/jdk/jdk11" clone-depth="1" />
+  <project path="prebuilts/ndk-r23" name="toolchain/prebuilts/ndk/r23" clone-depth="1" />
+
+  <project path="external/bazel-skylib" name="platform/external/bazel-skylib" />
+  <project path="build/bazel_common_rules" name="platform/build/bazel_common_rules" />
+  <project path="external/stardoc" name="platform/external/stardoc" />
+  <project path="external/python/absl-py" name="platform/external/python/absl-py" />
+
+  <!-- MT6897. The GKI tree moves to kernel-6.1 because build.config.mtk_kernel_device_modules
+       names it that way, and the mgk rules bring their own WORKSPACE and BUILD. -->
+  <project path="build/bazel_mgk_rules" name="android_kernel_build_bazel_mgk_rules" remote="lineage" revision="refs/heads/lineage-23.2">
+    <linkfile src="BUILD.bazel" dest="BUILD" />
+    <linkfile src="kleaf/bazel.WORKSPACE" dest="WORKSPACE" />
+  </project>
+  <project path="kernel-6.1" name="kernel_xiaomi_mt6897-gki" remote="mt6897" revision="refs/heads/16.2">
+    <linkfile src="build.config.constants" dest="build.config.constants" />
+  </project>
+  <project path="kernel_device_modules-6.1" name="kernel_xiaomi_mt6897-modules" remote="mt6897" revision="refs/heads/16.2">
+    <linkfile src="build.config.mtk_kernel_device_modules" dest="build.config" />
+    <linkfile src="build_mgk_64_k61.sh" dest="build_mgk_64_k61.sh" />
+  </project>
+  <project path="vendor/mediatek/kernel_modules" name="kernel_xiaomi_mt6897-vendor_modules" remote="mt6897" revision="refs/heads/16.2" />
+</manifest>
