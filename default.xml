@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
   <remote name="aosp" fetch="https://android.googlesource.com/" review="https://android-review.googlesource.com/" />
-  <remote name="mt6897" fetch="https://github.com/soralis0912-dev/" />
+  <remote name="mt6897" fetch="https://github.com/WitAqua-Devices/" />
   <remote name="lineage" fetch="https://github.com/LineageOS/" />
 
   <default revision="main-kernel-build-2023" remote="aosp" sync-j="4" />
